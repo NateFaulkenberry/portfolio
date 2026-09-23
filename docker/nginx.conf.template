@@ -1,0 +1,18 @@
+# Local preview server for the static export. Mimics GitHub Pages: directory
+# URLs serve index.html and unknown paths get the exported 404 page.
+# ${BASE_PATH} is substituted by the nginx image at startup ("" or "/repo").
+server {
+  listen 80;
+  server_name localhost;
+  root /usr/share/nginx/html;
+  index index.html;
+
+  # Keep redirects (e.g. /resume -> /resume/) relative to the browser's host:port.
+  absolute_redirect off;
+
+  location / {
+    try_files $uri $uri/ $uri.html =404;
+  }
+
+  error_page 404 ${BASE_PATH}/404.html;
+}

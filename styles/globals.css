@@ -1,0 +1,126 @@
+@import "tailwindcss";
+@import "./markdown.css";
+
+/*
+ * Design tokens. Colors are CSS variables so light/dark palettes swap in one
+ * place; Tailwind utilities (bg-paper, text-muted, border-rule, …) map to them.
+ */
+:root {
+  --paper: #f6f4ef;
+  --surface: #edeae3;
+  --ink: #181816;
+  --ink-soft: #3b3934;
+  --muted: #66625a;
+  --rule: #d8d3c8;
+  --accent: #a3401c;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #121210;
+    --surface: #1b1b18;
+    --ink: #edeae3;
+    --ink-soft: #cbc7bd;
+    --muted: #9b968b;
+    --rule: #2f2e2a;
+    --accent: #e3805a;
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+
+  --font-serif: var(--font-newsreader), ui-serif, Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+
+  --animate-enter: enter 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+
+  @keyframes enter {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@layer base {
+  html {
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Anchor targets (e.g. /code/#my-project) clear the top edge. */
+  [id] {
+    scroll-margin-top: 2rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Small uppercase monospace label used for metadata and section markers. */
+@utility eyebrow {
+  @apply font-mono text-[0.7rem] font-medium tracking-[0.14em] text-muted uppercase;
+}
+
+/* Understated text link with an underline that picks up the accent on hover. */
+@utility link {
+  @apply underline decoration-rule decoration-1 underline-offset-[0.25em] transition-colors duration-200 hover:text-accent hover:decoration-accent;
+}
+
+@media print {
+  @page {
+    margin: 1.6cm 1.8cm;
+  }
+  html {
+    background: #fff;
+    color: #000;
+    font-size: 10.5pt;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

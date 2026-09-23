@@ -1,0 +1,58 @@
+# Local development and builds without installing Node.
+#
+#   docker compose up                    → dev server with hot reload, http://localhost:3000
+#                                          (DEV_PORT=3001 docker compose up to change port)
+#   docker compose run --rm build        → typecheck + lint + static export to ./out + verify
+#   docker compose up preview            → serve ./out like GitHub Pages, http://localhost:8080
+#                                          (PREVIEW_PORT=8081 docker compose up preview to change port)
+#
+# Test a GitHub Pages project-site build (served under /portfolio/):
+#   BASE_PATH=/portfolio docker compose run --rm build
+#   BASE_PATH=/portfolio docker compose up preview   → http://localhost:8080/portfolio/
+#
+# A rebuild replaces ./out, so restart a running preview afterwards:
+#   docker compose restart preview
+
+services:
+  dev:
+    build:
+      context: .
+      target: dev
+    ports:
+      - "${DEV_PORT:-3000}:3000"
+    volumes:
+      - .:/app
+      # Keep the container's Linux node_modules and build cache out of the host tree.
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NEXT_TELEMETRY_DISABLED=1
+      # Reliable file watching through Docker bind mounts.
+      - WATCHPACK_POLLING=true
+      - CHOKIDAR_USEPOLLING=true
+
+  build:
+    profiles: [tools]
+    build:
+      context: .
+      target: deps
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    environment:
+      - NEXT_TELEMETRY_DISABLED=1
+      - BASE_PATH=${BASE_PATH:-}
+      - SITE_URL=${SITE_URL:-}
+    command: ["npm", "run", "check"]
+
+  preview:
+    profiles: [tools]
+    image: nginx:alpine
+    ports:
+      - "${PREVIEW_PORT:-8080}:80"
+    volumes:
+      - ./out:/usr/share/nginx/html${BASE_PATH:-}:ro
+      - ./docker/nginx.conf.template:/etc/nginx/templates/default.conf.template:ro
+    environment:
+      - BASE_PATH=${BASE_PATH:-}

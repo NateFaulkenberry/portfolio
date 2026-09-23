@@ -1,0 +1,181 @@
+/*
+ * Typography for rendered Markdown (resume, CV, section intros, project notes).
+ *
+ * `.markdown`          — base styles, used for short project descriptions.
+ * `.markdown-document` — adds the formal document treatment for resume/CV.
+ */
+
+@layer components {
+  .markdown {
+    @apply text-[1.0625rem] leading-[1.7] text-ink-soft;
+  }
+
+  .markdown > :first-child {
+    margin-top: 0;
+  }
+  .markdown > :last-child {
+    margin-bottom: 0;
+  }
+
+  .markdown :where(p, ul, ol, blockquote, pre, table, hr) {
+    margin-block: 1em;
+  }
+
+  .markdown :where(h1, h2, h3, h4) {
+    @apply font-serif text-ink;
+    font-weight: 450;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+
+  .markdown h1 {
+    @apply mt-0 mb-6 text-4xl md:text-5xl;
+    letter-spacing: -0.02em;
+  }
+  .markdown h2 {
+    @apply mt-12 mb-4 text-2xl;
+  }
+  .markdown h3 {
+    @apply mt-8 mb-1 text-xl;
+  }
+  .markdown h4 {
+    @apply mt-6 mb-1 font-sans text-base font-semibold;
+  }
+
+  .markdown strong {
+    @apply font-semibold text-ink;
+  }
+
+  .markdown a {
+    @apply text-ink underline decoration-rule decoration-1 underline-offset-[0.22em] transition-colors hover:text-accent hover:decoration-accent;
+  }
+
+  .markdown ul,
+  .markdown ol {
+    padding-left: 1.25em;
+  }
+  .markdown ul {
+    list-style: none;
+  }
+  .markdown ul > li {
+    position: relative;
+  }
+  .markdown ul > li::before {
+    content: "–";
+    position: absolute;
+    left: -1.1em;
+    color: var(--muted);
+  }
+  .markdown ol {
+    list-style: decimal;
+  }
+  .markdown ol > li::marker {
+    @apply font-mono text-sm text-muted;
+  }
+  .markdown li + li {
+    margin-top: 0.35em;
+  }
+  .markdown li > :where(ul, ol) {
+    margin-block: 0.35em;
+  }
+
+  .markdown blockquote {
+    @apply border-l-2 border-accent pl-5 font-serif text-xl text-ink italic;
+    line-height: 1.5;
+  }
+
+  .markdown hr {
+    @apply my-10 border-0 border-t border-rule;
+  }
+
+  .markdown :not(pre) > code {
+    @apply rounded-sm bg-surface px-1.5 py-0.5 font-mono text-[0.85em] text-ink;
+  }
+  .markdown pre {
+    @apply overflow-x-auto rounded-sm border border-rule bg-surface p-4 font-mono text-sm leading-relaxed text-ink;
+  }
+
+  .markdown table {
+    @apply w-full border-collapse text-left text-[0.95rem];
+  }
+  .markdown thead th {
+    @apply eyebrow border-b border-ink pb-2 font-medium;
+  }
+  .markdown td,
+  .markdown th {
+    @apply border-b border-rule py-2.5 pr-4 align-top;
+  }
+
+  .markdown img {
+    @apply my-8 h-auto max-w-full border border-rule;
+  }
+
+  /* ---------------------------------------------------------------------- */
+  /* Document treatment (resume / CV)                                        */
+  /* ---------------------------------------------------------------------- */
+
+  .markdown-document {
+    @apply text-base leading-[1.7];
+  }
+
+  .markdown-document h1 {
+    @apply mb-8 text-5xl md:text-6xl;
+  }
+
+  /* A later h1 is a major part of the document ("# Professional Experience" in
+     the CV), not a page title: smaller, with room to separate it from what came before. */
+  .markdown-document h1:not(:first-child) {
+    @apply mt-20 mb-6 text-3xl md:text-4xl;
+  }
+  .markdown-document h1 + h2 {
+    margin-top: 0;
+  }
+
+  /* Section headings read like a document's section markers. */
+  .markdown-document h2 {
+    @apply eyebrow mt-14 mb-6 border-t border-ink pt-3 font-mono text-[0.72rem];
+    letter-spacing: 0.16em;
+  }
+
+  .markdown-document h3 {
+    @apply mt-8 text-[1.35rem];
+  }
+  .markdown-document h2 + h3 {
+    margin-top: 0;
+  }
+
+  /* "**Role** · Dates" line directly under an entry heading. */
+  .markdown-document h3 + p {
+    @apply mt-1 text-[0.95rem] text-muted;
+  }
+  .markdown-document h3 + p strong {
+    @apply font-medium text-ink-soft;
+  }
+
+  @media print {
+    .markdown,
+    .markdown :where(h1, h2, h3, h4, strong, a, blockquote) {
+      color: #000 !important;
+    }
+    .markdown a {
+      text-decoration: none;
+    }
+    .markdown-document h1 {
+      font-size: 26pt;
+      margin-bottom: 14pt;
+    }
+    .markdown-document h2 {
+      margin-top: 18pt;
+      border-color: #000;
+      break-after: avoid;
+    }
+    .markdown-document h3 {
+      break-after: avoid;
+    }
+    .markdown-document li,
+    .markdown-document p {
+      break-inside: avoid;
+    }
+  }
+}
