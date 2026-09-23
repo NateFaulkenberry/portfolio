@@ -12,7 +12,7 @@
 title: Norma
 artist: Maia Dobbs
 role: "Producer"
-description: Debut album for songwriter Maia Dobbs. Co-produced with Mackenzie Christensen (producer / mix engineer / mastering)
+description: Debut album for songwriter Maia Dobbs. Co-produced with Mackenzie Christensen (producer, engineer, mastering)
 image: /images/audio/maia-dobbs.webp
 featured: true
 order: 1
