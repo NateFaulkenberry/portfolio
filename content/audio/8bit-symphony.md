@@ -12,7 +12,7 @@
 title: 8-Bit Symphony
 artist: 8-Bit Symphony
 role: "Producer, Engineer, Arist"
-description: Co-produced with Isaac Young (composer, songwriter)
+description: Co-produced with Isaac Young (composer, songwriter, artist)
 image: /images/audio/8bit-symphony.webp
 order: 7
 url: https://www.youtube.com/playlist?list=PLHcKBlvK9xVfFV2pnURLlyDn4acvlNU4_
