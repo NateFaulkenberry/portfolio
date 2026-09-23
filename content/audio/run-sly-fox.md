@@ -12,7 +12,7 @@
 title: A Bridge Burned
 artist: Run Sly Fox
 role: "Arist"
-description: Percussion, additional production
+description: Composer, songwriter, percussion, additional production
 image: /images/audio/run-sly-fox.webp
 order: 6
 url: https://open.spotify.com/album/5PHb79hR0yBVQVINmwVxET

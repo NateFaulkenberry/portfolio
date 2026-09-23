@@ -12,7 +12,7 @@
 title: Bright Signs for Dark Times
 artist: No Mind
 role: "Engineer"
-description: Composer, songwriter, percussion, additional production
+description: Tracking and mixing
 image: /images/audio/no-mind.webp
 order: 8
 url: https://open.spotify.com/album/42FQ4aZygH3InEPhYXTx1y
