@@ -15,7 +15,7 @@
 # ──────────────────────────────────────────────────────────────────────
 title: Code Challenge
 description: Browser-based coding challenge platform
-image: /images/code/av-gen.webp
+image: /images/code/code-challenge.webp
 github: https://github.com/NateFaulkenberry/code-challenge
 tags: [App, Web]
 order: 5
